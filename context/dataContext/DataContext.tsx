@@ -89,7 +89,12 @@ export const DataProvider = ({ children }: any) => {
     };
 
     return (
-        <DataContext.Provider value={{ chats, createChat, updateChat, getChats }}>
+        <DataContext.Provider
+        value={{
+             chats, 
+             createChat, 
+             updateChat, 
+             getChats }}>
             {children}
         </DataContext.Provider>
     );
