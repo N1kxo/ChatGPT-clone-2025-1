@@ -11,6 +11,8 @@ export default function Index() {
       style={styles.backGround}
     >
       <Button title="Screens" onPress={() => router.push("/welcome")}/>
+      <Button title="Register" onPress={() => router.push("/register")}/>
+      <Button title="Login" onPress={() => router.push("/login")}/>  
     </View>
   );
 }

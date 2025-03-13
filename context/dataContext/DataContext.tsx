@@ -6,6 +6,8 @@ import { collection, getDocs, addDoc, doc, updateDoc } from "firebase/firestore"
 
 interface DataContextProps {
     chats: Chat[];
+    getChatTitle: (messages: Message[]) => string;
+    updateChatTitle: (chatId: string, messages: Message[]) => Promise<void>;
     createChat: (text: string, messages: Message[]) => Promise<void>;
     updateChat: (chatId: string, messages: Message[]) => Promise<void>;
     getChats: () => Promise<void>;
@@ -22,11 +24,45 @@ export const DataProvider = ({ children }: any) => {
         getChats();
     }, []);
 
+    // Obtener las palabras más repetidas dentro del chat
+
+    const getChatTitle = (messages: Message[]): string => {
+        const stopWords = new Set(["the", "is", "in", "on", "at", "a", "an", "and", "or", "for", "to", "with", "about"]); // Palabras comunes que no queremos
+        const wordCounts: Record<string, number> = {};
+    
+        messages.forEach(({ text }) => {
+            text.toLowerCase()
+                .replace(/[^a-z\s]/g, "") // Quitar signos de puntuación
+                .split(/\s+/) // Separar por espacios
+                .forEach((word) => {
+                    if (!stopWords.has(word) && word.length > 2) { // Ignorar palabras cortas y comunes
+                        wordCounts[word] = (wordCounts[word] || 0) + 1;
+                    }
+                });
+        });
+    
+        const sortedWords = Object.entries(wordCounts).sort((a, b) => b[1] - a[1]); // Ordenar por frecuencia
+        const title = sortedWords.slice(0, 2).map(([word]) => word).join(" "); // Tomar las 2 palabras más frecuentes
+        return title || "Nuevo Chat";
+    };
+
+    // Actualizar el título de un chat en Firestore
+
+    const updateChatTitle = async (chatId: string, messages: Message[]) => {
+        const newTitle = getChatTitle(messages);
+    
+        const chatRef = doc(db, "chats", chatId);
+        await updateDoc(chatRef, { title: newTitle });
+    };
+    
+
     // Crear un nuevo chat en Firestore
     const createChat = async (title: string, messages: Message[]) => {
         try {
+            const generatedTitle = getChatTitle(messages);
+
             const newChat = {
-                title,
+                title: generatedTitle || "Nuevo Chat",
                 create_at: new Date(),
                 messages,
             };
@@ -42,6 +78,8 @@ export const DataProvider = ({ children }: any) => {
     // Actualizar un chat existente en Firestore
     const updateChat = async (chatId: string, messages: Message[]) => {
         try {
+            const updatedTitle = getChatTitle(messages);
+            
             const chatRef = doc(db, "chats", chatId);
             await updateDoc(chatRef, { messages });
 
@@ -76,7 +114,7 @@ export const DataProvider = ({ children }: any) => {
                 return {
                     id: doc.id,
                     create_at: data.create_at ? data.create_at.toDate() : null,
-                    messages: Array.isArray(data.messages) ? data.messages : [],
+                    messages: data.messages ?? [],
                     title: data.title || "Sin título",
                 };
             });
@@ -92,6 +130,8 @@ export const DataProvider = ({ children }: any) => {
         <DataContext.Provider
         value={{
              chats, 
+             getChatTitle,
+             updateChatTitle,
              createChat, 
              updateChat, 
              getChats }}>

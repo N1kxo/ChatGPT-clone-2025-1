@@ -244,4 +244,26 @@ export const styles = StyleSheet.create({
         color: "white",
         fontSize: 16,
     },
+    messageContainer: {
+        backgroundColor: "#2A2B32",
+        padding: 10,
+        borderRadius: 10,
+        marginBottom: 10,
+    },
+    sender: {
+        color: "#10A37F",
+        fontSize: 16,
+        fontWeight: "bold",
+    },
+    date: {
+        color: "#888",
+        fontSize: 12,
+        marginTop: 5,
+    },
+    noChatsText: {
+        color: "#777",
+        textAlign: "center",
+        marginVertical: 20,
+        fontSize: 14,
+    },
 });

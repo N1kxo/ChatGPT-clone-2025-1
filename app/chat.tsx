@@ -1,12 +1,22 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, Image, ScrollView, ActivityIndicator } from "react-native";
 import Icon from "react-native-vector-icons/Feather"; // Íconos minimalistas
 import { styles } from "./styles";
 import { APIResponse } from '../interfaces/Responses';
 import { useRouter } from "expo-router";
+import { DataContext } from "@/context/dataContext/DataContext";
+import { Message } from "../interfaces/AppInterfaces";
 
-export default function EmptyConversation() {
+export default function Chat() {
     const router = useRouter();
+    const dataContext = useContext(DataContext)
+
+    if (!dataContext) {
+        return <Text>Error: DataContext no disponible</Text>;
+    }
+
+    const { createChat } = dataContext;
+
     const [message, setMessage] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [messages, setMessages] = useState<{ text: string; sender: "user" | "bot" }[]>([]);
@@ -14,10 +24,8 @@ export default function EmptyConversation() {
     const getResponse = async () => {
         if (!message.trim()) return;
 
-        setMessages(prevMessages => [
-            ...prevMessages,
-            { text: message, sender: "user" }
-        ]);
+        const userMessage = { text: message, sender: "user" };
+        setMessages(prevMessages => [...prevMessages, userMessage]);
 
         setMessage("");
         setIsLoading(true);
@@ -38,10 +46,19 @@ export default function EmptyConversation() {
             const data: APIResponse = await response.json();
             const botResponse = data?.candidates?.[0]?.content?.parts?.[0]?.text || "No response received";
 
-            setMessages(prevMessages => [
-                ...prevMessages,
-                { text: botResponse, sender: "bot" }
-            ]);
+            const newBotMessage = { text: botResponse, sender: "bot" };
+
+            setMessages(prevMessages => [...prevMessages, newBotMessage]);
+
+            const updatedMessages: Message[] = [
+                ...messages, // Mensajes anteriores
+                { text: message, sender_by: "Me", date: new Date(), state: "Sent" },
+                { text: botResponse, sender_by: "Bot", date: new Date(), state: "Sent" }
+            ];
+
+             // Guardar el chat en Firestore
+             await createChat("Nuevo Chat", updatedMessages);
+            
         } catch (error) {
             console.log("Error en getResponse", error);
         } finally {
@@ -57,7 +74,7 @@ export default function EmptyConversation() {
                     <Icon name="arrow-left" size={24} color="white" />
                     <Text style={styles.backText}>Back</Text>
                 </TouchableOpacity>
-                <Image source={require("../assets/images/ChatGPT-Logo-mini.png")} style={styles.logo} />
+                <Image source={require("../assets/images/ChatGPT-Logo-mini.png")} style={styles.logo}/>
             </View>
 
             {/* ScrollView para mostrar mensajes */}
@@ -65,10 +82,7 @@ export default function EmptyConversation() {
                 {messages.map((msg, index) => (
                     <View 
                         key={index} 
-                        style={[
-                            styles.messageBubble, 
-                            msg.sender === "user" ? styles.userBubble : styles.botBubble
-                        ]}
+                        style={[styles.messageBubble, msg.sender === "user" ? styles.userBubble : styles.botBubble]}
                     >
                         <Text style={styles.messageText}>{msg.text}</Text>
                     </View>

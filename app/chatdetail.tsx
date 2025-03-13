@@ -59,10 +59,17 @@ export default function ChatDetailScreen() {
             <Text style={styles.chatText}>Mensajes:</Text>
             {chat.messages.length > 0 ? (
                 <FlatList
-                    data={chat.messages}
-                    keyExtractor={(item, index) => index.toString()}
-                    renderItem={({ item }) => <Text style={styles.message}>{item}</Text>}
-                />
+                data={chat.messages}
+                keyExtractor={(item, index) => index.toString()}
+                renderItem={({ item }) => (
+                    <View style={styles.messageContainer}>
+                        <Text style={styles.sender}>{item.sender_by}</Text> 
+                        <Text style={styles.message}>{item.text}</Text>  
+                        <Text style={styles.date}>{new Date(item.date).toLocaleString()}</Text> 
+                    </View>
+                )}
+            />
+            
             ) : (
                 <Text style={styles.noMessages}>No hay mensajes en este chat.</Text>
             )}

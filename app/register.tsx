@@ -37,7 +37,7 @@ export default function RegisterScreen() {
     };
 
     return (
-        <View style={styles.backGround}>
+        <View style={{flex: 1, justifyContent: "center", padding: 20, backgroundColor: "#343541"}}>
             <Text style={{ fontSize: 20, fontWeight: "bold", marginBottom: 20, color: "white" }}>Registro</Text>
 
             <TextInput

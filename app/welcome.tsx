@@ -18,7 +18,7 @@ export default function WelcomeScreen() {
                 <Text style={styles.exampleCard}>"How do I make an HTTP request in Javascript?"</Text>
             </View>
 
-            <TouchableOpacity style={styles.nextButton} onPress={() => router.push("/empty_conversations")}>
+            <TouchableOpacity style={styles.nextButton} onPress={() => router.push("/chat")}>
                 <Text style={styles.nextButtonText}>Next</Text>
             </TouchableOpacity>
             
