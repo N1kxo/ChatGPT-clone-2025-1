@@ -1,6 +1,6 @@
 # 🚀 ChatGPT2025 - Aplicación en React Native con Expo  
 
-Este es un proyecto creado con [create-expo-app](https://www.npmjs.com/package/create-expo-app), utilizando **React Native** y **Expo** y **Firebase**.  
+Este es un proyecto creado con [create-expo-app](https://www.npmjs.com/package/create-expo-app), utilizando **React Native**, **Expo** y **Firebase**.  
 
 ## 📌 Características  
 - 📱 **Interfaz móvil** optimizada con Expo.  
@@ -8,24 +8,14 @@ Este es un proyecto creado con [create-expo-app](https://www.npmjs.com/package/c
 - 💬 **Chats en tiempo real** organizados en una lista.  
 - 🌐 **Navegación** con expo-router.  
 
-## 📂 Estructura del proyecto  
+## 📜 Descripción del Proyecto  
 
-/ChatGPT2025 
-│── /.expo # Configuración de Expo 
-│── /app # Carpeta principal de la aplicación 
-│── /app-example # Código de ejemplo inicial 
-│── /assets # Imágenes y otros archivos estáticos 
-│── /context # Context API para autenticación y datos 
-│── /interfaces # Tipos e interfaces TypeScript 
-│── /utils # Utilidades y funciones auxiliares 
-│── /node_modules # Dependencias de npm 
-│── .gitignore # Archivos ignorados en Git 
-│── app.json # Configuración de Expo 
-│── expo-env.d.ts # Tipos de ambiente para Expo 
-│── package-lock.json # Control de versiones de dependencias 
-│── package.json # Configuración del proyecto y dependencias 
-│── README.md # Documentación del proyecto 
-│── tsconfig.json # Configuración de TypeScript
+**ChatGPT2025** es una aplicación desarrollada como parte de la materia de **Desarrollo Móvil**, con el objetivo de profundizar en el uso de **React Native**, **Expo** y **Firebase**. A través de este proyecto, exploré nuevas herramientas y enfoques dentro del desarrollo de aplicaciones móviles, mejorando mis habilidades en la gestión de estado, autenticación y comunicación en tiempo real.  
+
+La aplicación permite la creación y gestión de chats en tiempo real, brindando una experiencia fluida e interactiva para los usuarios. Gracias a la integración con **Firestore**, los mensajes se almacenan y sincronizan de manera eficiente, lo que garantiza una comunicación rápida y confiable. 
+
+Este proyecto no solo sirvió como práctica técnica, sino también como una oportunidad para familiarizarme con **buenas prácticas en desarrollo móvil**, el uso de **TypeScript para tipado seguro**, y la implementación de **navegación dinámica con React Navigation**.  
+
 
 ## 🚀 Funcionalidades  
 
