@@ -44,9 +44,9 @@ Este es un proyecto creado con [`create-expo-app`](https://www.npmjs.com/package
 
 ## 📚 Recursos adicionales
 
-- Expo Docs
-- React Native Docs
-- Firebase Firestore
+- [Expo Docs] (https://docs.expo.dev)
+- [React Native Docs] (https://reactnative.dev/docs/getting-started)
+- [Firebase Firestore] (https://firebase.google.com/docs/firestore?hl=es-419)
 
 
 # 🚀 Desarrollado con 💙 por Nicolas Esteban Muñoz Sendoya / N1kxo
