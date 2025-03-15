@@ -39,4 +39,4 @@ Este proyecto no solo sirvió como práctica técnica, sino también como una op
 
 ---
 
-🚀 **Desarrollado con 💙 por Nicolas Esteban Muñoz Sendoya / N1kxo**  
+🚀 **Desarrollado con 💚 por Nicolas Esteban Muñoz Sendoya / N1kxo**  
