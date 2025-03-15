@@ -1,7 +1,7 @@
 import { Chat, Message } from "@/interfaces/AppInterfaces";
 import { createContext, useState, useEffect } from "react";
 import { db } from "@/utils/FirebaseConfig";
-import { collection, getDocs, addDoc, doc, updateDoc } from "firebase/firestore";
+import { collection, getDocs, addDoc, doc, updateDoc, deleteDoc } from "firebase/firestore";
 
 
 interface DataContextProps {
@@ -11,6 +11,7 @@ interface DataContextProps {
     createChat: (text: string, messages: Message[]) => Promise<void>;
     updateChat: (chatId: string, messages: Message[]) => Promise<void>;
     getChats: () => Promise<void>;
+    clearChats: () => Promise<void>;
 }
 
 // Crear el contexto
@@ -126,6 +127,29 @@ export const DataProvider = ({ children }: any) => {
         }
     };
 
+    // Limpiar todos los chats
+
+    const clearChats = async () => {
+        try {
+            const chatsCollection = collection(db, "chats");
+            const querySnapshot = await getDocs(chatsCollection);
+    
+            // Eliminar cada chat de la base de datos
+            const deletePromises = querySnapshot.docs.map((doc) =>
+                deleteDoc(doc.ref)
+            );
+            await Promise.all(deletePromises);
+    
+            // Limpiar el estado local
+            setChats([]);
+    
+            console.log("✅ Todas las conversaciones han sido eliminadas");
+        } catch (error) {
+            console.error("🔥 Error al eliminar las conversaciones:", error);
+        }
+    };
+    
+
     return (
         <DataContext.Provider
         value={{
@@ -134,7 +158,10 @@ export const DataProvider = ({ children }: any) => {
              updateChatTitle,
              createChat, 
              updateChat, 
-             getChats }}>
+             getChats,
+             clearChats,
+             }}
+             >
             {children}
         </DataContext.Provider>
     );
