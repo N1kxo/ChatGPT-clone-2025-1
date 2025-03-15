@@ -1,50 +1,37 @@
-# Welcome to your Expo app 👋
+# 🚀 ChatGPT2025 - Aplicación en React Native con Expo  
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Este es un proyecto creado con [`create-expo-app`](https://www.npmjs.com/package/create-expo-app), utilizando **React Native** y **Expo** y **Firebase**.  
 
-## Get started
+## 📌 Características  
+- 📱 **Interfaz móvil** optimizada con Expo.  
+- 🔥 **Autenticación** y manejo de datos con Firestore.  
+- 💬 **Chats en tiempo real** organizados en una lista.  
+- 🌐 **Navegación** con `expo-router`.  
 
-1. Install dependencies
+## 📂 Estructura del proyecto  
 
-   ```bash
-   npm install
-   ```
+/ChatGPT2025 │── /.expo # Configuración de Expo │── /app # Carpeta principal de la aplicación │── /app-example # Código de ejemplo inicial │── /assets # Imágenes y otros archivos estáticos │── /context # Context API para autenticación y datos │── /interfaces # Tipos e interfaces TypeScript │── /utils # Utilidades y funciones auxiliares │── /node_modules # Dependencias de npm │── .gitignore # Archivos ignorados en Git │── app.json # Configuración de Expo │── expo-env.d.ts # Tipos de ambiente para Expo │── package-lock.json # Control de versiones de dependencias │── package.json # Configuración del proyecto y dependencias │── README.md # Documentación del proyecto │── tsconfig.json # Configuración de TypeScript
 
-2. Start the app
 
-   ```bash
-    npx expo start
-   ```
+## 🚀 Funcionalidades
 
-In the output, you'll find options to open the app in a
+- Iniciar sesión y acceder a los chats.
+- Crear, ver y eliminar chats.
+- Cerrar sesión de manera segura.
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## 🛠️ Tecnologías usadas
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+- React Native con Expo
+- Firestore para almacenamiento
+- Context API para manejo de estado
+- TypeScript para tipado seguro
+- React Navigation para navegación
 
-## Get a fresh project
+## 📚 Recursos adicionales
 
-When you're ready, run:
+- Expo Docs
+- React Native Docs
+- Firebase Firestore
 
-```bash
-npm run reset-project
-```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+# 🚀 Desarrollado con 💙 por Nicolas Esteban Muñoz Sendoya / N1kxo
