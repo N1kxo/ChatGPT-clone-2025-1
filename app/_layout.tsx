@@ -13,7 +13,6 @@ export default function RootLayout() {
           <Stack.Screen name="welcome" options={{ headerShown: false }} />
           <Stack.Screen name="dashboard" options={{ headerShown: false }} />
           <Stack.Screen name="chat" options={{ headerShown: false }} />
-          <Stack.Screen name="chatlist" options={{ headerShown: false }} />
           <Stack.Screen name="chatdetail" options={{ headerShown: false }} />
           <Stack.Screen name="register" options={{ headerShown: false }} />
           <Stack.Screen name="login" options={{ headerShown: false }} />
