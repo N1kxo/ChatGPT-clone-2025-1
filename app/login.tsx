@@ -29,7 +29,7 @@ export default function LoginScreen() {
 
         if (user) {
             Alert.alert("Éxito", "Inicio de sesión exitoso");
-            router.push("/chat"); // Ajusta la ruta según la navegación de tu app
+            router.push("/welcome"); // Ajusta la ruta según la navegación de tu app
         } else {
             Alert.alert("Error", "No se pudo iniciar sesión");
         }

@@ -30,7 +30,7 @@ export default function RegisterScreen() {
 
         if (user) {
             Alert.alert("Éxito", "Usuario registrado con éxito");
-            router.push("/chat");
+            router.push("/login");
         } else {
             Alert.alert("Error", "No se pudo registrar el usuario");
         }
