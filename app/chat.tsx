@@ -74,7 +74,9 @@ export default function Chat() {
                     <Icon name="arrow-left" size={24} color="white" />
                     <Text style={styles.backText}>Back</Text>
                 </TouchableOpacity>
-                <Image source={require("../assets/images/ChatGPT-Logo-mini.png")} style={styles.logo}/>
+                <TouchableOpacity onPress={() => router.push("/dashboard")}>
+                    <Image source={require("../assets/images/ChatGPT-Logo-mini.png")} style={styles.logo} />
+                </TouchableOpacity>
             </View>
 
             {/* ScrollView para mostrar mensajes */}

@@ -1,19 +1,23 @@
 import React, { useContext, useEffect, useState } from "react";
-import { View, Text, FlatList, TouchableOpacity, ActivityIndicator } from "react-native";
+import { View, Text, FlatList, TouchableOpacity, ActivityIndicator, Alert } from "react-native";
 import Icon from "react-native-vector-icons/Feather";
 import { styles } from "./styles";
 import { useRouter } from "expo-router";
 import { DataContext } from "@/context/dataContext/DataContext";
+import { AuthContext } from "@/context/authContext/AuthContext";
 
 export default function Dashboard() {
     const router = useRouter();
     const dataContext = useContext(DataContext);
+    const authContext = useContext(AuthContext);
 
-    if (!dataContext) {
-        return <Text>Error: DataContext no disponible</Text>;
+    if (!dataContext || !authContext) {
+        return <Text>Error: Contextos no disponibles</Text>;
     }
 
-    const { chats, getChats } = dataContext;
+    const { chats, getChats, clearChats } = dataContext;
+    const { logoutUser} = authContext;
+
     const [loading, setLoading] = useState(true);
     
     useEffect(() => {
@@ -23,6 +27,26 @@ export default function Dashboard() {
         };
         fetchChats();
     }, []);
+
+    // Función para confirmar y limpiar las conversaciones
+    const handleClearChats = async () => {
+        Alert.alert("Clear conversations", "Are you sure you want to clear all conversations?", [
+            { text: "Cancel", style: "cancel" },
+            { text: "Confirm", onPress: async () => {
+                await clearChats();
+            }}
+        ]);
+    };
+
+    // Función para cerrar sesión
+    const handleLogout = async () => {
+        Alert.alert("Logout", "Are you sure you want to logout?", [
+            { text: "Cancel", style: "cancel" },
+            { text: "Confirm", onPress: async () => {
+                await logoutUser();
+            }}
+        ]);
+    };
 
     return (
         <View style={styles.container}>
@@ -61,7 +85,11 @@ export default function Dashboard() {
 
             {/* Opciones del Dashboard */}
             {menuOptions.map((option, index) => (
-                <TouchableOpacity key={index} style={styles.option} activeOpacity={0.7}>
+                <TouchableOpacity key={index} style={styles.option} activeOpacity={0.7} onPress={() => {
+                    if (option.label === "Clear conversations") {
+                        handleClearChats();
+                    }
+                }}>
                     <Icon name={option.icon} size={20} color="white" />
                     <Text style={styles.optionText}>{option.label}</Text>
                     {option.badge && (
@@ -73,7 +101,7 @@ export default function Dashboard() {
             ))}
 
             {/* Botón de Logout */}
-            <TouchableOpacity style={styles.logout} activeOpacity={0.8}>
+            <TouchableOpacity style={styles.logout} activeOpacity={0.8} onPress={handleLogout}>
                 <Icon name="log-out" size={20} color="#E55353" />
                 <Text style={styles.logoutText}>Logout</Text>
             </TouchableOpacity>
