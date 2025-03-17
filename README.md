@@ -31,7 +31,7 @@ Este proyecto no solo sirvió como práctica técnica, sino también como una op
 - 🛠️ **TypeScript para tipado seguro**  
 - 📌 **React Navigation para navegación**  
 
-## 📚 Recursos adicionales  
+## 📚 Documentacion utilizada para el proyecto
 
 - 📖 [Expo Docs](https://docs.expo.dev)  
 - 📖 [React Native Docs](https://reactnative.dev/docs/getting-started)  
