@@ -8,6 +8,7 @@ interface AuthContextProps {
     registerUser: (email: string, password: string) => Promise<User | null>;
     loginUser: (email: string, password: string) => Promise<User | null>;
     logoutUser: () => Promise<void>;
+    uid: string;
 }
 
 // Crear el contexto
@@ -68,7 +69,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             user,
             registerUser,
             loginUser,
-            logoutUser }}>
+            logoutUser,
+            uid: user?.uid || ""}}>
             {children}
         </AuthContext.Provider>
 };
