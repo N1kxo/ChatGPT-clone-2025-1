@@ -42,12 +42,15 @@ export default function Dashboard() {
     const handleLogout = async () => {
         Alert.alert("Logout", "Are you sure you want to logout?", [
             { text: "Cancel", style: "cancel" },
-            { text: "Confirm", onPress: async () => {
-                await logoutUser();
-            }}
+            { 
+                text: "Confirm", 
+                onPress: async () => {
+                    await logoutUser();
+                    router.replace("/"); // 🔥 Redirige al login después de cerrar sesión
+                } 
+            }
         ]);
     };
-
     return (
         <View style={styles.container}>
             {/* Botón de Nuevo Chat */}

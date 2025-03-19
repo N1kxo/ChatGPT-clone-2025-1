@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { View, Text, TextInput, TouchableOpacity, Alert } from "react-native";
-import { AuthContext } from "../context/authContext/AuthContext"; // Ajusta la ruta según tu estructura de carpetas
+import { AuthContext } from "../context/authContext/AuthContext";
 import { useRouter } from "expo-router";
 
 export default function LoginScreen() {
@@ -16,23 +16,29 @@ export default function LoginScreen() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
+    const [errorMessage, setErrorMessage] = useState(""); // Estado para el mensaje de error
 
     const handleLogin = async () => {
         if (!email || !password) {
-            Alert.alert("Error", "Por favor completa todos los campos.");
+            setErrorMessage("Por favor completa todos los campos.");
             return;
         }
 
         setLoading(true);
-        const user = await loginUser(email, password);
-        setLoading(false);
+        setErrorMessage(""); // Limpiar mensaje previo
 
-        if (user) {
-            Alert.alert("Éxito", "Inicio de sesión exitoso");
-            router.push("/welcome"); // Ajusta la ruta según la navegación de tu app
-        } else {
-            Alert.alert("Error", "No se pudo iniciar sesión");
+        try {
+            const user = await loginUser(email, password);
+            if (user) {
+                router.push("/welcome"); // Ajusta la ruta según la navegación de tu app
+            } else {
+                setErrorMessage("Correo o contraseña incorrectos.");
+            }
+        } catch (error) {
+            setErrorMessage("Ocurrió un error. Intenta nuevamente.");
         }
+
+        setLoading(false);
     };
 
     return (
@@ -55,6 +61,10 @@ export default function LoginScreen() {
                 style={{ borderBottomWidth: 1, marginBottom: 20, padding: 10, color: "white" }}
                 secureTextEntry
             />
+
+            {errorMessage ? (
+                <Text style={{ color: "red", textAlign: "center", marginBottom: 10 }}>{errorMessage}</Text>
+            ) : null}
 
             <TouchableOpacity
                 onPress={handleLogin}
