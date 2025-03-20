@@ -10,7 +10,7 @@ export default function Index() {
     <View
       style={styles.backGround}
     >
-      <Button title="Screens" onPress={() => router.push("/splashscreen")}/>
+      <Button title="SplashScreen" onPress={() => router.push("/splashscreen")}/>
       <Button title="Register" onPress={() => router.push("/register")}/>
       <Button title="Login" onPress={() => router.push("/login")}/>  
     </View>
