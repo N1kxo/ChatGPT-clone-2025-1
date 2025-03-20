@@ -71,7 +71,7 @@ export default function ChatDetailScreen() {
         const message: Message = {
             sender_by: user?.name || "Me",
             text: newMessage,
-            date: new Date().toISOString()
+            date: new Date().toISOString(),
         };
 
         try {
