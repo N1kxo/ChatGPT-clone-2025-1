@@ -1,7 +1,7 @@
 import { Chat, Message } from "@/interfaces/AppInterfaces";
 import { createContext, useState, useEffect, useContext } from "react";
 import { db } from "@/utils/FirebaseConfig";
-import { collection, getDocs, addDoc, doc, updateDoc, deleteDoc, query, where } from "firebase/firestore";
+import { collection, getDocs, addDoc, doc, updateDoc, deleteDoc, query, where, arrayUnion } from "firebase/firestore";
 import { AuthContext } from "../authContext/AuthContext"; // Asegúrate de importar tu contexto de autenticación
 
 interface DataContextProps {
@@ -12,6 +12,8 @@ interface DataContextProps {
     updateChat: (chatId: string, messages: Message[]) => Promise<void>;
     getChats: () => Promise<void>;
     clearChats: () => Promise<void>;
+    addMessageToChat: (chatId: string, newMessage: Message) => Promise<void>;
+    sendMessageToChat: (chatId: string, message: Message) => Promise<void>;
 }
 
 // Crear el contexto
@@ -20,11 +22,11 @@ export const DataContext = createContext<DataContextProps | undefined>(undefined
 // Proveedor del contexto
 export const DataProvider = ({ children }: any) => {
     const [chats, setChats] = useState<Chat[]>([]);
-    const user  = useContext(AuthContext); // Obtener el usuario autenticado
+    const user = useContext(AuthContext); // Obtener el usuario autenticado
 
     useEffect(() => {
-        if (user) getChats(); // Solo obtener los chats si hay un usuario autenticado
-    }, [user]);
+        if (user?.uid) getChats(); // Solo obtener los chats si hay un usuario autenticado
+    }, [user?.uid]);
 
     const getChatTitle = (messages: Message[]): string => {
         const stopWords = new Set(["the", "is", "in", "on", "at", "a", "an", "and", "or", "for", "to", "with", "about"]);
@@ -144,6 +146,42 @@ export const DataProvider = ({ children }: any) => {
         }
     };
 
+    // **Añadir mensajes a un chat existente**
+    const addMessageToChat = async (chatId: string, newMessage: Message) => {
+        try {
+            const chatRef = doc(db, "chats", chatId);
+
+            await updateDoc(chatRef, {
+                messages: arrayUnion(newMessage), // Agregar mensaje sin sobrescribir
+            });
+
+            setChats(prevChats =>
+                prevChats.map(chat =>
+                    chat.id === chatId
+                        ? { ...chat, messages: [...chat.messages, newMessage] }
+                        : chat
+                )
+            );
+
+            console.log("✅ Mensaje agregado al chat:", chatId);
+        } catch (error) {
+            console.error("🔥 Error agregando mensaje:", error);
+        }
+    };
+
+    // **Enviar mensajes a un chat existente**
+    const sendMessageToChat = async (chatId: string, message: Message) => {
+        try {
+            const chatRef = doc(db, "chats", chatId);
+            await updateDoc(chatRef, {
+                messages: arrayUnion(message)
+            });
+            console.log("✅ Mensaje enviado al chat:", chatId);
+        } catch (error) {
+            console.error("🔥 Error enviando mensaje:", error);
+        }
+    };
+
     return (
         <DataContext.Provider
             value={{
@@ -154,6 +192,8 @@ export const DataProvider = ({ children }: any) => {
                 updateChat,
                 getChats,
                 clearChats,
+                addMessageToChat,
+                sendMessageToChat, // 🔹 Corregido el nombre aquí
             }}
         >
             {children}
