@@ -268,4 +268,14 @@ export const styles = StyleSheet.create({
         marginVertical: 20,
         fontSize: 14,
     },
+    textInput: {
+        flex: 1,
+        color: "white",
+        fontSize: 16,
+    },
+    sendButtonText: {
+        color: "white",
+        fontSize: 16,
+        fontWeight: "bold",
+    },
 });
