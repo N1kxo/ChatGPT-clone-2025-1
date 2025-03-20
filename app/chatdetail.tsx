@@ -1,22 +1,24 @@
 import React, { useEffect, useState, useContext } from "react";
-import { View, Text, FlatList, TextInput, TouchableOpacity, ActivityIndicator, KeyboardAvoidingView, Platform } from "react-native";
+import { View, Text, FlatList, ActivityIndicator, KeyboardAvoidingView, Platform, TouchableOpacity, TextInput } from "react-native";
 import { useLocalSearchParams } from "expo-router";
 import { DataContext } from "@/context/dataContext/DataContext";
 import { styles } from "./styles";
 import { Chat, Message } from "../interfaces/AppInterfaces";
 import { AuthContext } from "@/context/authContext/AuthContext";
+import { Icon } from "react-native-vector-icons/Icon";
 
 export default function ChatDetailScreen() {
     const { chatId } = useLocalSearchParams(); 
     const dataContext = useContext(DataContext);
+    const authContext = useContext(AuthContext);
 
     // Verificar si el contexto está disponible
-    if (!dataContext || !AuthContext) {
+    if (!dataContext || !authContext) {
         return <Text>Error: Contextos no disponibles</Text>;
     }
 
     // Extraer valores del contexto
-    const user = AuthContext;
+    const user = authContext;
     const { chats, getChats, sendMessageToChat } = dataContext;
     const [chat, setChat] = useState<Chat | null>(null);
     const [loading, setLoading] = useState(true);
@@ -116,7 +118,7 @@ export default function ChatDetailScreen() {
                     onChangeText={setNewMessage}
                 />
                 <TouchableOpacity style={styles.sendButton} onPress={handleSendMessage}>
-                    <Text style={styles.sendButtonText}>Enviar</Text>
+                    <Icon name="send" size={20} color="white" />
                 </TouchableOpacity>
             </View>
         </KeyboardAvoidingView>
