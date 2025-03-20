@@ -5,7 +5,6 @@ import { DataContext } from "@/context/dataContext/DataContext";
 import { styles } from "./styles";
 import { Chat, Message } from "../interfaces/AppInterfaces";
 import { AuthContext } from "@/context/authContext/AuthContext";
-import { Icon } from "react-native-vector-icons/Icon";
 
 export default function ChatDetailScreen() {
     const { chatId } = useLocalSearchParams(); 
@@ -118,7 +117,7 @@ export default function ChatDetailScreen() {
                     onChangeText={setNewMessage}
                 />
                 <TouchableOpacity style={styles.sendButton} onPress={handleSendMessage}>
-                    <Icon name="send" size={20} color="white" />
+                    <Text style={styles.sendButtonText}>Enviar</Text>
                 </TouchableOpacity>
             </View>
         </KeyboardAvoidingView>
